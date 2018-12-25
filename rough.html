@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <div id="infoStyle" class="col-lg-6 center-block infoWindow animated">
+        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+            <h4>First Name : <input id="fName" type="text" pattern="[A-Za-z]{50}" title="50 characters or less"></h4>
+            <h4>Last Name : <input id="lName" type="text" pattern="[A-Za-z]{50}" title="50 characters or less"></h4>
+            <h4>Email Address : <input id="email" type="email"></h4>
+            <br>
+              <button type='submit' onclick="createStudent()" class="btn btn-info" >Add Student</button>
+            <br><br>
+    </div>
+
+    <input type="button" value="Generate Table" onclick="GenerateTable()" />
+    <hr />
+    <div id="dvTable">
+    </div>
+
+    <script>
+      var student= new Array();
+        
+    function GenerateTable () {    
+        event.preventDefault();
+
+        //Create a HTML Table element.
+        var table = document.createElement("TABLE");
+        table.border = "1";
+        
+        if(student.length > 1) {
+            //Get the count of columns.
+            var columnCount = student[0].length;
+ 
+            //Add the header row.
+            var row = table.insertRow(-1);
+            for (var i = 0; i < columnCount; i++) {
+                    var headerCell = document.createElement("TH");
+                    headerCell.innerHTML = student[0][i];
+                    row.appendChild(headerCell);
+            }
+
+            //Add the data rows.
+            for (var i = 1; i < student.length; i++) {
+                row = table.insertRow(-1);
+                
+                for (var j = 0; j < columnCount; j++) {
+                    var cell = row.insertCell(-1);
+                    cell.innerHTML = student[i][j];
+                }
+            }
+ 
+            var dvTable = document.getElementById("dvTable");
+            dvTable.innerHTML = "";
+            dvTable.appendChild(table);
+        }
+    }
+
+    function createStudent(){
+        // this is how you set it
+      var newStudent = new Object();
+  
+      newStudent.fName = document.getElementById('fName').value;
+      newStudent.lName = document.getElementById('lName').value;
+      newStudent.email = document.getElementById('email').value;
+
+      if (student.length == 0) {  
+         student.push(["First Name", "Last Name", "Email-ID"]);
+      }
+      
+      student.push(newStudent);
+    }
+    </script>
+</body>
+</html>
+
+
